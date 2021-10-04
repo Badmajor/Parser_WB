@@ -1,8 +1,10 @@
+# coding: utf8
 import urllib.request
+import urllib.parse
 from bs4 import BeautifulSoup
 
 
-def check_price_title(article: int):
+def get_product_data(article: int):
     page = urllib.request.urlopen(f'https://www.wildberries.ru/catalog/{article}/detail.aspx')
     scr = page.read()
     soup = BeautifulSoup(scr, 'lxml')
@@ -14,7 +16,7 @@ def check_price_title(article: int):
         if 'ssrModel' in str(st):
             temp = str(st).split(':')
             for d in temp:
-                if 'ordersCount' in d: 
+                if 'ordersCount' in d:
                     index = temp.index(d)
                     if str(article) in temp[index]:
                         temp[index+1].split(',')
